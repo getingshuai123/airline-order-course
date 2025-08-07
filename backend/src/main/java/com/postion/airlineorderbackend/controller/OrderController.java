@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.postion.airlineorderbackend.dto.ApiResponse;
 import com.postion.airlineorderbackend.dto.OrderDto;
 import com.postion.airlineorderbackend.service.OrderService;
 
@@ -24,15 +25,15 @@ public class OrderController {
 	
 	// 获取所有订单
 	@GetMapping
-	public List<OrderDto> getAllOrders(){
-		return orderService.getAllOrders();
+	public ResponseEntity<ApiResponse<List<OrderDto>>> getAllOrders(){
+		return ResponseEntity.ok(ApiResponse.success(orderService.getAllOrders()));
 	}
 	
 	// 获取选中的订单
 	@GetMapping("/{id}")
-	public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
-		Optional<OrderDto> getOrder = orderService.getOrderById(id);
-		return getOrder.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<ApiResponse<Optional<OrderDto>>> getOrderById(@PathVariable Long id) {
+		return ResponseEntity.ok(ApiResponse.success(orderService.getOrderById(id)));
+		
 	}
 
 }

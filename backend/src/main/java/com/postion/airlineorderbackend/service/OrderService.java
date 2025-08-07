@@ -20,5 +20,5 @@ public interface OrderService {
 	OrderDto cancelOrder(Long id);
 	
 	// 重试 调用异步方法
-	Void requestTicketIssuance(Long id);
+	void requestTicketIssuance(Long id);
 }

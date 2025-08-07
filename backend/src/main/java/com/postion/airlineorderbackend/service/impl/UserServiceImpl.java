@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.postion.airlineorderbackend.Mapper.OrderMapper;
+import com.postion.airlineorderbackend.dto.OrderDto;
+import com.postion.airlineorderbackend.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,30 +24,22 @@ public class UserServiceImpl implements UserService{
 	// repository层依赖
 	private final UserRepository userRepository;
 
+	// DaoToDTO
+	private final OrderMapper  orderMapper;
+
 	// 获取全部User信息
 	@Override
 	@Transactional(readOnly = true)
 	public List<UserDto> getAllUsers() {
 		List<User> allUser = userRepository.findAll();
-		return allUser.stream().map(this::convertUserToUserDto).collect(Collectors.toList());
+		return allUser.stream()
+				.map(orderMapper::toUserDto).collect(Collectors.toList());
 	}
 
 	// 获取当前User信息
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<UserDto> getUserById(Long id) {
-		return userRepository.findById(id).map(this::convertUserToUserDto);
-	}
-
-	/**
-	 * 将User实体转换为UserDto
-	 * @param user
-	 * @return userDto
-	 */
-	private UserDto convertUserToUserDto(User user) {
-		UserDto userDto = new UserDto();
-		userDto.setId(user.getId());
-		userDto.setUsername(user.getUsername());
-		return userDto;
+	public Optional<UserDto> getUserbyUsername(String username) {
+		return userRepository.findByUsername(username).map(orderMapper::toUserDto);
 	}
 }

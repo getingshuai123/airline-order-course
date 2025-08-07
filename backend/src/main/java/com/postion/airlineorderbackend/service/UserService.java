@@ -10,6 +10,6 @@ public interface UserService {
 	List<UserDto> getAllUsers();
 	
 	// 查个人用户信息
-	Optional<UserDto> getUserById(Long id);
+	Optional<UserDto> getUserbyUsername(String username);
 
 }
