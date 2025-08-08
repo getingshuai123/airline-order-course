@@ -15,15 +15,15 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
-	
-	private final AuthService authService;
-	
-	/**
-	 * 用户验证并生成token登录
-	 */
-	@PostMapping("/login")
-	public AuthResponse login(@RequestBody AuthRequest request) {
-		return authService.login(request);
-	}
+
+    private final AuthService authService;
+
+    /**
+     * 用户验证并生成token登录
+     */
+    @PostMapping("/login")
+    public AuthResponse login(@RequestBody AuthRequest request) {
+        return authService.login(request);
+    }
 
 }

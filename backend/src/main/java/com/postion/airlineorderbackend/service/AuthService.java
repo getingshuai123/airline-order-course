@@ -15,29 +15,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
 
-	private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-	private final JwtService jwtService;
+    private final JwtService jwtService;
 
-	/**
-	 * 
-	 * 用户验证并生成token登录
-	 * 
-	 */
-	public AuthResponse login(AuthRequest request) {
-		// 用户验证
-		Authentication authenticaion =  authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-
-		// 调取验证成功用户的个人信息
-		final UserDetails userDetails = (UserDetails) authenticaion.getPrincipal();
-		
-		// 生成token
-		final String jwt = jwtService.generateToken(userDetails);
-
-		// token打包发回给用户
-		return AuthResponse.builder().token(jwt).build();
-
-	}
+    /**
+     * 用户验证并生成token登录
+     */
+    public AuthResponse login(AuthRequest request) {
+        // 用户验证
+        Authentication authenticaion = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        // 调取验证成功用户的个人信息
+        final UserDetails userDetails = (UserDetails) authenticaion.getPrincipal();
+        // 生成token
+        final String jwt = jwtService.generateToken(userDetails);
+        // token打包发回给用户
+        return AuthResponse.builder().token(jwt).build();
+    }
 
 }

@@ -11,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/Users")
 @RequiredArgsConstructor
 public class UserController {
-	
-	// service层依赖
-	private final UserService userService;
-	
-	
+
+    // service层依赖
+    private final UserService userService;
 
 }

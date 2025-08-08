@@ -19,21 +19,20 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("api/orders")
 @RequiredArgsConstructor
 public class OrderController {
-	
-	// service层依赖
-	private final OrderService orderService;
-	
-	// 获取所有订单
-	@GetMapping
-	public ResponseEntity<ApiResponse<List<OrderDto>>> getAllOrders(){
-		return ResponseEntity.ok(ApiResponse.success(orderService.getAllOrders()));
-	}
-	
-	// 获取选中的订单
-	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<Optional<OrderDto>>> getOrderById(@PathVariable Long id) {
-		return ResponseEntity.ok(ApiResponse.success(orderService.getOrderById(id)));
-		
-	}
+
+    // service层依赖
+    private final OrderService orderService;
+
+    // 获取所有订单
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<OrderDto>>> getAllOrders() {
+        return ResponseEntity.ok(ApiResponse.success(orderService.getAllOrders()));
+    }
+
+    // 获取选中的订单
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<Optional<OrderDto>>> getOrderById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(orderService.getOrderById(id)));
+    }
 
 }

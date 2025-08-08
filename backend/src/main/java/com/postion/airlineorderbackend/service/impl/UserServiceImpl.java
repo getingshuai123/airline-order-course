@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.postion.airlineorderbackend.Mapper.OrderMapper;
-import com.postion.airlineorderbackend.dto.OrderDto;
-import com.postion.airlineorderbackend.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,4 +40,5 @@ public class UserServiceImpl implements UserService{
 	public Optional<UserDto> getUserbyUsername(String username) {
 		return userRepository.findByUsername(username).map(orderMapper::toUserDto);
 	}
+
 }

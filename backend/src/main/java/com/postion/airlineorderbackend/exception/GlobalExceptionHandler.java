@@ -14,15 +14,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<Object>> handleBusinessException(BusinessException e) {
-        log.error("业务异常：{}",e.getMessage(),e);
-        ApiResponse<Object> apiResponse = ApiResponse.error(String.valueOf(e.getStatus().value()),e.getMessage());
-        return new ResponseEntity<>(apiResponse,e.getStatus());
+        log.error("业务异常:{}", e.getMessage(), e);
+        ApiResponse<Object> apiResponse = ApiResponse.error(String.valueOf(e.getStatus().value()), e.getMessage());
+        return new ResponseEntity<>(apiResponse, e.getStatus());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleGlobalException(Exception e) {
-        log.error("未捕获的系统异常：{}",e.getMessage(),e);
-        ApiResponse<Object> apiResponse = ApiResponse.error("500","系统内部错误，请联系管理员");
-        return new ResponseEntity<>(apiResponse,org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR);
+        log.error("未捕获的系统异常:{}", e.getMessage(), e);
+        ApiResponse<Object> apiResponse = ApiResponse.error("500", "系统内部错误，请联系管理员");
+        return new ResponseEntity<>(apiResponse, org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

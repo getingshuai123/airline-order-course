@@ -9,8 +9,8 @@ import com.postion.airlineorderbackend.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	
-	// 获取用户信息
-	Optional<User> findByUsername(String username);
+
+    // 获取用户信息
+    Optional<User> findByUsername(String username);
 
 }

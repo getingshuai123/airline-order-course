@@ -38,4 +38,5 @@ public class SwaggerConfig {
                                 .bearerFormat("JWT")
                                 .description("JWT认证令牌")));
     }
+
 }
