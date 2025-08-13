@@ -3,7 +3,6 @@ package com.postion.airlineorderbackend.service.impl;
 import com.postion.airlineorderbackend.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +18,21 @@ import java.util.function.Function;
 @Service
 public class JwtServiceImpl implements JwtService {
 
-    @Value("${jwt.secret}")
-    private String secretKeyString;
+    // @Value("${jwt.secret}")
+    // private String secretKeyString;
 
-    @Value("${jwt.expiration.ms}")
-    private Long jwtExpiration;
+    // @Value("${jwt.expiration.ms}")
+    // private Long jwtExpiration;
+
+    private final String secretKeyString;
+    private final Long jwtExpiration;
+
+    public JwtServiceImpl(
+            @Value("${jwt.secret}") String secretKeyString,
+            @Value("${jwt.expiration.ms}") Long jwtExpiration) {
+        this.secretKeyString = secretKeyString;
+        this.jwtExpiration = jwtExpiration;
+    }
 
     // 生成JWT,仅包含用户信息（用户名）
     @Override
@@ -33,18 +42,31 @@ public class JwtServiceImpl implements JwtService {
 
     // 生成JWT核心方法，可以包含额外的claims
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+
+        // 获取当前时间
+        final long currentMills = System.currentTimeMillis();
+        // 当前时间
+        final Date currentTime = new Date(currentMills);
+        // 过期时间
+        final Date expirationDate = new Date(currentMills + jwtExpiration);
+
         return Jwts
                 // 构建一个jwt
                 .builder()
-                //设置需要自定义的数据（如用户角色，权限等）
-                .setClaims(extraClaims)
+                // 设置需要自定义的数据（如用户角色，权限等）
+                // .setClaims(extraClaims)
+                .claims(extraClaims)
                 // 设置jwt主题，存放用户名，这是用户的唯一标识 ***很重要**
-                .setSubject(userDetails.getUsername())
+                // .setSubject(userDetails.getUsername())
+                .subject(userDetails.getUsername())
                 // 令牌的生命周期
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                // .setIssuedAt(new Date(System.currentTimeMillis()))
+                // .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .issuedAt(currentTime)
+                .expiration(expirationDate)
                 // 签名核心 生成第三部分的signature，确保令牌完整性
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                // .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInKey())
                 // 将三部分组合成最终的String格式
                 .compact();
     }
