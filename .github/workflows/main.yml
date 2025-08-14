@@ -41,7 +41,8 @@ jobs:
 
       # 步骤4: 使用Maven进行构建和打包
       - name: Build with Maven
-        run: mvn -B package --file pom.xml -DskipTests
+        working-directory: ./backend
+        run: mvn -B package -DskipTests
 
       # 步骤5: 登录到Docker Hub
       - name: Log in to Docker Hub
