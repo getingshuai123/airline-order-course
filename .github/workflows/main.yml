@@ -9,7 +9,7 @@ on:
 # 定义环境变量，方便复用
 env:
   # 镜像名称，格式: <仓库用户名>/<应用名>
-  IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/airline-order-course
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/airline-order-course
 
 # 工作流中的任务
 jobs:
