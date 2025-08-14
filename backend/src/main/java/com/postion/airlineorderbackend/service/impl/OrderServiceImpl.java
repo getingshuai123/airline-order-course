@@ -125,8 +125,8 @@ public class OrderServiceImpl implements OrderService {
         OrderDto orderDto = getOrderById(id).orElseThrow(() -> new BusinessException(
                 HttpStatus.NOT_FOUND, "订单不存在，无法取消订单，订单ID:{}" + id));
 
-        // 2. 校验订单状态:仅待支付订单可取消
-        if (orderDto.getStatus() != OrderStatus.PENDING_PAYMENT) {
+        // 2. 校验订单状态:待支付/已支付/出票失败 订单可取消
+        if (orderDto.getStatus() != OrderStatus.PENDING_PAYMENT && orderDto.getStatus() != OrderStatus.PAID && orderDto.getStatus() != OrderStatus.TICKETING_FAILED) {
             log.error("该订单不是未支付状态，无法取消，请确认！订单ID: {}, 当前订单状态: {}", id, orderDto.getStatus());
             // 400
             throw new BusinessException(
@@ -170,8 +170,8 @@ public class OrderServiceImpl implements OrderService {
         OrderDto orderDto = getOrderById(id).orElseThrow(() -> new BusinessException(
                 HttpStatus.NOT_FOUND, "订单不存在，无法出票，订单ID:{}" + id));
 
-        // 2. 校验订单状态:仅已支付订单可重试出票
-        if (orderDto.getStatus() != OrderStatus.PAID) {
+        // 2. 校验订单状态:仅已支付订单/出票失败可重试出票
+        if (orderDto.getStatus() != OrderStatus.PAID && orderDto.getStatus() != OrderStatus.TICKETING_FAILED) {
             log.error("该订单不是已支付状态，无法出票，请确认！订单ID: {}, 当前订单状态: {}", id, orderDto.getStatus());
             // 400
             throw new BusinessException(
