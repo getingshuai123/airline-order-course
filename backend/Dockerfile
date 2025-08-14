@@ -18,7 +18,7 @@ RUN mvn package -DskipTests
 
 # --- 阶段 2: 运行阶段 (使用一个非常小的纯Java运行环境) ---
 # 这是一个非常小的基础镜像，只包含运行Java程序所必需的东西
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre
 
 # 设置工作目录
 WORKDIR /app
