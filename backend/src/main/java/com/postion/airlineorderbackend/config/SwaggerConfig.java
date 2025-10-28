@@ -26,7 +26,7 @@ public class SwaggerConfig {
                         .url("https://github.com/tianyf925"))
                 )
                 .servers(java.util.Arrays.asList(
-                        new Server().url("http://54.215.183.169:8080"),
+                        new Server().url("http://16.60.29.50:8080"),
                         new Server().url("http://api.airline.com")
                 ))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
